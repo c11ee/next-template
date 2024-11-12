@@ -17,5 +17,23 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply font-pht;
+}
+
+.px-global {
+  @apply px-5 lg:px-[50px] xl:px-[100px] xxl:px-[200px];
+}
+
+.title {
+  @apply text-center my-8 md:mt-[52px] md:mb-[30px];
+}
+.title h1 {
+  @apply text-[28px] md:text-[32px] font-bold text-primary;
+}
+.title desc {
+  @apply text-2xl text-gray-200;
+}
+
+.section{
+  @apply my-40;
 }

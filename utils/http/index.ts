@@ -58,7 +58,7 @@ class PureHttp {
         return whiteList.some((url) => config.url!.endsWith(url))
           ? config
           : new Promise((resolve) => {
-              config.url = process.env.NEXT_PUBLIC_PROXY + config.url!;
+              config.url = process.env.NEXT_PUBLIC_HOST_API + config.url!;
               resolve(config);
             });
       },

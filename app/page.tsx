@@ -1,15 +1,23 @@
 "use client";
 
-import { getJztk } from "@/http/apis";
+import Banner from "@/components/banner";
+import Counseling from "@/components/counseling";
+import Partners from "@/components/partners";
+import Products from "@/components/products";
+import Solution from "@/components/solution";
 
 export default function Home() {
-  const form = {
-    key: "9aea28773b64b6fadc99e33b3505bee2",
-    subject: 1,
-    model: "c1",
-    testType: "rand",
-  };
-  const { data } = getJztk(form);
+  return (
+    <>
+      <Banner sort={0}></Banner>
 
-  return <div>{JSON.stringify(data)}</div>;
+      <Products></Products>
+
+      <Solution></Solution>
+
+      <Partners></Partners>
+
+      <Counseling></Counseling>
+    </>
+  );
 }

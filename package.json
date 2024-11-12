@@ -9,12 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/cache": "^11.13.1",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.6",
+    "@mui/material-nextjs": "^6.1.6",
+    "@reduxjs/toolkit": "^2.3.0",
+    "@types/animejs": "^3.1.12",
     "@types/qs": "^6.9.17",
+    "animejs": "^3.2.2",
     "axios": "^1.7.7",
+    "lodash": "^4.17.21",
     "next": "15.0.3",
     "qs": "^6.13.0",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react-redux": "^9.1.2",
     "swiper": "5.4.5",
     "swr": "^2.2.5"
   },
