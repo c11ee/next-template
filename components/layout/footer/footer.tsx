@@ -5,11 +5,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getIndexNav } from "@/apis/nav";
 import LangText from "@/components/langText";
-import { useRouter } from "next/navigation";
-import Qrcode from "/image/qrcode.png";
+import Qrcode from "../../../public/image/qrcode.png";
 
 const Footer = () => {
-  const router = useRouter();
   const [footList, setFootList] = useState<Nav[]>([]);
   const friendlyLinks = [
     {

@@ -4,7 +4,6 @@ import Image from "@/components/image/";
 import { useEffect, useState } from "react";
 import LangText from "../langText";
 import { Button } from "@mui/material";
-import Img from "../../public/image/bigImg1.png";
 
 /** 产品解决方案 */
 const Solution = () => {
@@ -12,7 +11,9 @@ const Solution = () => {
   const [content, setContent] = useState<Content>();
 
   useEffect(() => {
-    data && setContent(data.data.content.find((i) => i.nid == 1));
+    if (data) {
+      setContent(data.data.content.find((i) => i.nid == 1));
+    }
   }, [data]);
   return (
     <section className="section px-global">

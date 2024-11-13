@@ -12,7 +12,9 @@ const Counseling = () => {
   const [news, setNews] = useState<Con[]>([]);
 
   useEffect(() => {
-    data && setNews(data?.data.con);
+    if (data) {
+      setNews(data?.data.con);
+    }
   }, [data]);
 
   return (

@@ -1,12 +1,12 @@
 "use client";
 
-import Nav from "@/components/layout/nav/index";
+import Nav from "../nav/index";
 import { Provider } from "react-redux";
 import store from "@/store";
 import { handleChangeScrollY, handleChangeWindowWidth } from "@/store/app";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import Footer from "@/components/layout/footer/footer";
+import Footer from "../footer/footer";
 
 const Warp = ({
   children,

@@ -8,7 +8,7 @@ import { setLang } from "@/store/app";
 import { useDispatch } from "react-redux";
 
 const NavLang = () => {
-  let langs = {
+  const langs = {
     cn: "中文",
     en: "English",
     ja: "日本語",

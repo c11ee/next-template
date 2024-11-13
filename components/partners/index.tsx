@@ -1,6 +1,5 @@
 import { getContent } from "@/apis/content";
 import t from "@/i18n";
-import { Card, CardContent, CardMedia } from "@mui/material";
 import { useEffect, useState } from "react";
 import LangText from "../langText";
 import Image from "@/components/image/";

@@ -3,13 +3,14 @@ import { StoreStateType } from "@/store";
 
 type Prop = {
   name: Name;
-  [key: string]: any;
+  onClick?: () => void;
+  [key: string]: string | Name | (() => void) | undefined;
 };
 
 /**
  * 处理后端返回国际化文本
  */
-const LangText = ({ name, html, ...arg }: Prop) => {
+const LangText = ({ name, ...arg }: Prop) => {
   const { lang } = useSelector((state: StoreStateType) => state.app);
 
   return (

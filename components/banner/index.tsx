@@ -1,19 +1,12 @@
 import useBanner from "@/hooks/useBanner";
-import { StaticImageData } from "next/legacy/image";
 import Image from "@/components/image/";
 import LangText from "../langText";
-
-type BannerType = {
-  image: string | StaticImageData;
-  title: string;
-  desc: string;
-};
 
 /**
  *  轮播图组件
  */
 const Banner = ({ sort }: { sort: number }) => {
-  const { images, name, url } = useBanner(sort);
+  const { images, name } = useBanner(sort);
 
   return (
     <section className="relative w-full sm:h-[300px] md:h-[600px] xl:h-[1000px] text-base">

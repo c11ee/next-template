@@ -1,11 +1,5 @@
 import { getProduct, getProductCate } from "@/apis/products";
-import {
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
+import { Button, Card, CardContent, CardMedia } from "@mui/material";
 import { useEffect, useState } from "react";
 import LangText from "../langText";
 import Empty from "../empty";
@@ -20,8 +14,12 @@ const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    catsData && setCats(catsData?.data.cats);
-    productsData && setProducts(productsData?.data.product);
+    if (catsData) {
+      setCats(catsData?.data.cats);
+    }
+    if (productsData) {
+      setProducts(productsData?.data.product);
+    }
   }, [catsData, productsData]);
 
   function handleChangeTab(id: number) {
