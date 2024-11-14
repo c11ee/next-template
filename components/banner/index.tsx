@@ -6,7 +6,7 @@ import LangText from "../langText";
  *  轮播图组件
  */
 const Banner = ({ sort }: { sort: number }) => {
-  const { images, name } = useBanner(sort);
+  const { images, name, abstract } = useBanner(sort);
 
   return (
     <section className="relative w-full sm:h-[300px] md:h-[600px] xl:h-[1000px] text-base">
@@ -22,10 +22,9 @@ const Banner = ({ sort }: { sort: number }) => {
         <h1 className="text-lg sm:text-[30px] lg:text-[45px] sm:leading-[53px] font-pht-b font-bold">
           <LangText name={name}></LangText>
         </h1>
-        {/* <span className="text-base sm:text-[18px] lg:text-[26px] my-5 inline-block">
-          阿三顶顶顶顶顶顶顶顶
-          {desc}
-        </span> */}
+        <span className="text-base sm:text-[18px] lg:text-[26px] my-5 inline-block">
+          <LangText name={abstract}></LangText>
+        </span>
       </div>
     </section>
   );

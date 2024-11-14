@@ -28,12 +28,12 @@ body {
   @apply text-center my-8 md:mt-[52px] md:mb-[30px];
 }
 .title h1 {
-  @apply text-[28px] md:text-[32px] font-bold text-primary;
+  @apply text-lg md:text-[32px] font-bold text-primary;
 }
-.title desc {
-  @apply text-2xl text-gray-200;
+.title p {
+  @apply text-base md:text-2xl text-gray-200 mt-5;
 }
 
-.section{
-  @apply my-40;
+.section {
+  @apply my-5 lg:my-40;
 }

@@ -1,5 +1,3 @@
-"use client";
-
 import Banner from "@/components/banner";
 import Counseling from "@/components/counseling";
 import Partners from "@/components/partners";

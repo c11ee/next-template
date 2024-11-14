@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   basePath: process.env.NEXT_PUBLIC_PATH,
   output: "export",
   images: {
-    domains: ["192.168.0.147"],
+    domains: ["192.168.0.147", "www.geenyuan.com"],
     loader: "custom",
     // 处理网络图片
     loaderFile: "./my-loader.ts",

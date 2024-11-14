@@ -6,5 +6,9 @@ export default {
   "cpjjfa-s": "Excellent performance, can easily handle high-load task",
   'hzhb':"Partners",
   'zxzx':"Counseling Center",
-  all:"More"
+  all:"More",
+  hot: "Popular",
+  new:"New",
+  scenario: "Application Scenario",
+  link:"Friendly Links"
 };

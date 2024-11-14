@@ -1,95 +1,15 @@
-"use client";
-
 import Image from "@/components/image/";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getIndexNav } from "@/apis/nav";
+import { getIndexLink, getIndexNav } from "@/apis/nav";
 import LangText from "@/components/langText";
 import Qrcode from "../../../public/image/qrcode.png";
+import t from "@/i18n";
 
 const Footer = () => {
   const [footList, setFootList] = useState<Nav[]>([]);
-  const friendlyLinks = [
-    {
-      label: "格恩源1688店铺",
-      url: "https://www.1688.com/",
-    },
-    {
-      label: "格恩源亚马逊店铺",
-      url: "https://www.amazon.com/",
-    },
-    {
-      label: "格恩源淘宝店铺",
-      url: "https://www.taobao.com/",
-    },
-  ];
-  const { data } = getIndexNav("bottom");
-  // const footList = [
-  //   {
-  //     title: "首页",
-  //     children: [
-  //       {
-  //         label: "核心业务",
-  //         href: "/#business",
-  //       },
-  //       {
-  //         label: "精选案例",
-  //         href: "/#case",
-  //       },
-  //       {
-  //         label: "合作伙伴",
-  //         href: "/#partners",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     title: "定制开发",
-  //     children: [
-  //       {
-  //         label: "APP开发",
-  //         href: "/appdev",
-  //       },
-  //       {
-  //         label: "小程序开发",
-  //         href: "/miniprogram",
-  //       },
-  //       {
-  //         label: "网页定制开发",
-  //         href: "/urlcustom",
-  //       },
-  //       {
-  //         label: "各行业软件开发",
-  //         href: "/industrysoftdev",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     title: "资讯动态",
-  //     children: [
-  //       {
-  //         label: "资讯动态",
-  //         href: "/trends",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     title: "关于我们",
-  //     children: [
-  //       {
-  //         label: "公司简介",
-  //         href: "/aboutus#intro",
-  //       },
-  //       {
-  //         label: "资质荣誉",
-  //         href: "/aboutus#honor",
-  //       },
-  //       {
-  //         label: "发展历程",
-  //         href: "/aboutus#course",
-  //       },
-  //     ],
-  //   },
-  // ];
+  const { data } = getIndexNav(1);
+  const { data: dataLink } = getIndexLink();
 
   useEffect(() => {
     setFootList(data?.data.navs || []);
@@ -130,10 +50,10 @@ const Footer = () => {
           </div>
           {/* 友情链接 */}
           <div className="text-white text-sm sm:mt-4">
-            <span>友情链接：</span>
-            {friendlyLinks.map((i) => (
-              <Link href={i.url} target="_black" className="mr-2" key={i.label}>
-                {i.label}
+            <span>{t("link")}：</span>
+            {dataLink?.data.link.map((i) => (
+              <Link href={i.url} target="_black" className="mr-2" key={i.id}>
+                <LangText name={i.name}></LangText>
               </Link>
             ))}
           </div>

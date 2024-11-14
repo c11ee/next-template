@@ -5,20 +5,28 @@ import LangText from "../langText";
 import Empty from "../empty";
 import t from "@/i18n";
 
-const Products = () => {
-  const [currentCats, setCurrentCats] = useState(0);
+const Products = ({
+  id,
+  contentData,
+}: {
+  id?: number;
+  contentData?: Content;
+}) => {
+  const [currentCats, setCurrentCats] = useState(id || 0);
+  const types = ["hot", "new"];
+  const [type, setType] = useState<Type>("hot");
   const { data: catsData } = getProductCate();
-  const { data: productsData } = getProduct({ cid: currentCats });
+  const { data: productsData } = getProduct({ cid: currentCats, type });
 
   const [cats, setCats] = useState<ProductCate[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     if (catsData) {
-      setCats(catsData?.data.cats);
+      setCats(catsData?.data?.cats || []);
     }
     if (productsData) {
-      setProducts(productsData?.data.product);
+      setProducts(productsData?.data?.product || []);
     }
   }, [catsData, productsData]);
 
@@ -29,11 +37,15 @@ const Products = () => {
   return (
     <section className="section px-global">
       <div className="title">
-        <h1>{t("product")}</h1>
-        <desc>{t("p-d")}</desc>
+        <h1>
+          {contentData && <LangText name={contentData?.name[0]}></LangText>}
+        </h1>
+        <p>
+          {contentData && <LangText name={contentData?.abstract[0]}></LangText>}
+        </p>
       </div>
 
-      <ul className="flex justify-center gap-x-5 border-b border-solid border-gray-100 pb-5 mb-8">
+      <ul className="flex flex-wrap justify-center gap-x-5 border-b border-solid border-gray-100 pb-5 mb-8">
         <Button
           variant="text"
           size="large"
@@ -67,6 +79,26 @@ const Products = () => {
           </li>
         ))}
       </ul>
+
+      {id && (
+        <ul className="flex mb-5">
+          {types.map((i) => (
+            <li key={i}>
+              <Button
+                variant="text"
+                size="large"
+                sx={{
+                  fontSize: 15,
+                  color: type == i ? "" : "#5c5c5c",
+                }}
+                onClick={() => setType(i as Type)}
+              >
+                {t(i)}
+              </Button>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <ul
         className="grid sm:grid-cols-2 gap-x-3 gap-y-5

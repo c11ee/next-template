@@ -5,12 +5,14 @@ import useSWR from "swr";
 export const getContent = ({
   type,
   cid,
+  nid,
 }: {
   type: ContentType;
   cid?: number;
+  nid?: number;
 }) => {
   return useSWR(
-    `/index/content?cid=${cid || 0}&type=${type!}` as string,
+    `/index/content?cid=${cid || 0}&nid=${nid || 0}&type=${type!}` as string,
     (url) => http.request<ResultType<{ content: Content[] }>>("get", url),
     { revalidateOnFocus: false }
   );

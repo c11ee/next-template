@@ -27,4 +27,23 @@ interface Child {
   language: Language;
 }
 
+interface Link {
+  id: number;
+  name: Name;
+  url: string;
+  mark: string;
+  sort: number;
+  status: number;
+  create_time: string;
+  delete_time: null;
+  language: Language;
+}
 
+interface Seo {
+  id: number;
+  key_title: string;
+  key_word: string;
+  key_content: string;
+  create_time: string;
+  delete_time: null;
+}

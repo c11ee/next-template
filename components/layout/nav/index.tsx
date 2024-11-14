@@ -156,7 +156,7 @@ const NavBar = () => {
   const [navBg, setNavBg] = useState("");
   const [open, setOpen] = useState(false);
   const [links, setLinks] = useState<Nav[]>([]);
-  const { data } = getIndexNav("top");
+  const { data } = getIndexNav(0);
 
   useEffect(() => {
     setNavBg(

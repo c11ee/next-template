@@ -9,6 +9,7 @@ type ContentType = "solute" | "partner" | "research" | "about" | "good";
 
 interface Banner {
   id: number;
+  abstract: Name;
   name: Name;
   url: string;
   images: string;

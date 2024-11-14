@@ -14,6 +14,11 @@ const useBanner = (sort: number) => {
   return (
     data?.data.banner.find((i) => i.sort == sort) || {
       images: "",
+      abstract: {
+        cn: "",
+        en: "",
+        ja: "",
+      },
       name: {
         cn: "",
         en: "",

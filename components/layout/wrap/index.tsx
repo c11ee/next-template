@@ -1,5 +1,3 @@
-"use client";
-
 import Nav from "../nav/index";
 import { Provider } from "react-redux";
 import store from "@/store";
@@ -7,6 +5,21 @@ import { handleChangeScrollY, handleChangeWindowWidth } from "@/store/app";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Footer from "../footer/footer";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "../../../theme";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+import localFont from "next/font/local";
+
+const aliPuHuiTiBold = localFont({
+  src: "../../../public/fonts/Alibaba-PuHuiTi-Bold.ttf",
+  variable: "--font-ali-puhuiti-bold",
+  weight: "100 900",
+});
+const aliPuHuiTiRegular = localFont({
+  src: "../../../public/fonts/Alibaba-PuHuiTi-Regular.ttf",
+  variable: "--font-ali-puhuiti-regular",
+  weight: "100 900",
+});
 
 const Warp = ({
   children,
@@ -49,7 +62,11 @@ const Warp = ({
       window.removeEventListener("resize", handleResize);
     };
   }, []); // 空依赖数组表示这个effect只在组件挂载和卸载时运行
-  return <>{children}</>;
+  return (
+    <div className={`${aliPuHuiTiBold.variable} ${aliPuHuiTiRegular.variable}`}>
+      {children}
+    </div>
+  );
 };
 
 export default function RootTemplate({
@@ -60,9 +77,13 @@ export default function RootTemplate({
   return (
     <Provider store={store}>
       <Warp>
-        <Nav></Nav>
-        {children}
-        <Footer></Footer>
+        <AppRouterCacheProvider>
+          <ThemeProvider theme={theme}>
+            <Nav></Nav>
+            {children}
+            <Footer></Footer>
+          </ThemeProvider>
+        </AppRouterCacheProvider>
       </Warp>
     </Provider>
   );
