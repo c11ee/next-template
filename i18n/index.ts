@@ -6,6 +6,8 @@ import { StoreStateType } from "@/store";
 
 const t = (key: string) => {
   const { lang } = useSelector((state: StoreStateType) => state.app);
+  if (!lang) return key;
+
   let map = {
     cn: cn,
     en: en,

@@ -41,9 +41,9 @@ interface Link {
 
 interface Seo {
   id: number;
-  key_title: string;
-  key_word: string;
-  key_content: string;
+  key_title: Name;
+  key_word: Name;
+  key_content: Name;
   create_time: string;
   delete_time: null;
 }

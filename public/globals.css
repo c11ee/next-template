@@ -35,5 +35,10 @@ body {
 }
 
 .section {
-  @apply my-5 lg:my-40;
+  @apply my-5 lg:my-20;
+}
+
+.course-swiper .swiper-slide-prev,
+.course-swiper .swiper-slide-next {
+  transform: scale(0.9);
 }

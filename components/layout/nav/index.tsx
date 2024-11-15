@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "@/components/image/";
 import { MouseEvent, useEffect, useState } from "react";
 import Link from "next/link";
@@ -11,8 +9,10 @@ import _ from "lodash";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import LangText from "@/components/langText";
-import { getIndexNav } from "@/apis/nav";
 import NavLang from "./lang";
+import { useDispatch } from "react-redux";
+import { setNid } from "@/store/app";
+import useNav from "@/hooks/useNav";
 
 function handleActive(key: string, activeKey: string): boolean {
   if (_.isArray(key)) {
@@ -62,6 +62,7 @@ const MenuCloseIcon = () => {
 };
 
 const DropDown = ({ item, activeUrl }: { item: Nav; activeUrl: string }) => {
+  const dispatch = useDispatch(); // 定义派发器
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -126,15 +127,19 @@ const DropDown = ({ item, activeUrl }: { item: Nav; activeUrl: string }) => {
         }}
       >
         {item.children?.map((link) => (
-          <MenuItem key={link.id}>
+          <MenuItem
+            key={link.id}
+            className={`${link.status == 0 ? "!hidden" : ""}`}
+          >
             <Link
-              className={
+              className={`${
                 handleActive(link.url, activeUrl)
                   ? "text-primary"
                   : "text-gray-900"
-              }
+              } `}
               href={link.url}
               target={link.url.indexOf("http") != -1 ? "_black" : ""}
+              onClick={() => dispatch(setNid(link.id))}
             >
               <LangText name={link.name}></LangText>
             </Link>
@@ -146,8 +151,10 @@ const DropDown = ({ item, activeUrl }: { item: Nav; activeUrl: string }) => {
 };
 
 const NavBar = () => {
+  const dispatch = useDispatch(); // 定义派发器
   const pathname = usePathname();
   const router = useRouter();
+  const { data, getNidByPath } = useNav(0);
 
   const { scrollY, windowWidth } = useSelector(
     (state: StoreStateType) => state.app
@@ -156,7 +163,6 @@ const NavBar = () => {
   const [navBg, setNavBg] = useState("");
   const [open, setOpen] = useState(false);
   const [links, setLinks] = useState<Nav[]>([]);
-  const { data } = getIndexNav(0);
 
   useEffect(() => {
     setNavBg(
@@ -187,6 +193,14 @@ const NavBar = () => {
   }, [open]);
 
   useEffect(() => {
+    let p = pathname;
+    // 匹配咨询详情动态路由
+    const regex = /^\/consult\/(?:\d+|\w+)\/(?:\d+|\w+)$/;
+    if (regex.test(p)) {
+      p = "/consult/[type]/[id]";
+    }
+    dispatch(setNid(getNidByPath(p)));
+
     setLinks(data?.data.navs || []);
   }, [data]);
 
@@ -212,7 +226,9 @@ const NavBar = () => {
                 key={link.id}
                 className={`relative hover:text-primary ${
                   handleActive(link.url, activeUrl) ? "text-primary" : ""
-                }`}
+                }
+                ${link.status == 0 ? "hidden" : ""}
+                `}
               >
                 {link.children ? (
                   <DropDown item={link} activeUrl={activeUrl}></DropDown>
@@ -220,6 +236,7 @@ const NavBar = () => {
                   <Link
                     href={link.url!}
                     target={link.url.indexOf("http") != -1 ? "_black" : ""}
+                    onClick={() => dispatch(setNid(link.id))}
                   >
                     <LangText name={link.name}></LangText>
                   </Link>
@@ -260,14 +277,15 @@ const NavBar = () => {
           {links.map((link) => (
             <li
               key={link.id}
-              className={`text-xl text-gray-900 ${
+              className={`text-base text-gray-900 ${
                 handleActive(link.url, activeUrl) && "text-primary"
-              }`}
+              } ${link.status == 0 ? "hidden" : ""}`}
             >
               <LangText
                 name={link.name}
                 onClick={() => {
                   if (!link.children) {
+                    dispatch(setNid(link.id));
                     router.push(link.url);
                   }
                 }}
@@ -277,14 +295,15 @@ const NavBar = () => {
                   {link.children.map((item) => (
                     <li
                       key={item.id}
-                      className={`text-lg text-gray-900 ${
+                      className={`text-sm text-gray-900 ${
                         handleActive(item.url, activeUrl) && "text-primary"
-                      }`}
+                      } ${item.status == 0 ? "hidden" : ""}`}
                     >
                       <LangText
                         name={item.name}
                         onClick={() => {
                           router.push(item.url);
+                          dispatch(setNid(item.id));
                         }}
                       ></LangText>
                     </li>

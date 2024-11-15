@@ -10,5 +10,6 @@ export default {
   hot: "人気のある",
   new:"最新の",
   scenario: "アプリケーションシナリオ",
-  link:"フレンドリーリンク"
+  link:"フレンドリーリンク",
+  allT: "全て",
 };

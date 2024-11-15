@@ -7,7 +7,7 @@ import Solution from "@/components/solution";
 export default function Home() {
   return (
     <>
-      <Banner sort={0}></Banner>
+      <Banner></Banner>
 
       <Products></Products>
 

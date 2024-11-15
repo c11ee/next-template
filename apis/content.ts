@@ -19,10 +19,30 @@ export const getContent = ({
 };
 
 /** 咨询  */
-export const getConsult = () => {
+export const getConsult = ({
+  type,
+  page,
+  limit,
+}: {
+  type?: string;
+  page?: number;
+  limit?: number;
+} = {}) => {
   return useSWR(
-    `/index/consult`,
-    (url) => http.request<ResultType<{ con: Con[] }>>("get", url),
+    `/index/consult?page=${page || 1}&limit=${limit || 10}${
+      type ? "&type=" + type : ""
+    }` as string,
+    (url) =>
+      http.request<ResultType<{ con: Con[]; count: number }>>("get", url),
+    { revalidateOnFocus: false }
+  );
+};
+
+/** 合作伙伴  */
+export const getPartner = () => {
+  return useSWR(
+    `/index/partner`,
+    (url) => http.request<ResultType<{ partner: Partner[] }>>("get", url),
     { revalidateOnFocus: false }
   );
 };

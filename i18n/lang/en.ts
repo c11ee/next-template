@@ -10,5 +10,6 @@ export default {
   hot: "Popular",
   new:"New",
   scenario: "Application Scenario",
-  link:"Friendly Links"
+  link:"Friendly Links",
+  allT: "All",
 };

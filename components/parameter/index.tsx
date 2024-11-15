@@ -8,8 +8,8 @@ const Parameter = ({ data }: { data?: Content }) => {
     if (data?.images) {
       new Swiper(".parameter-swiper", {
         slidesPerView: "auto",
-        loop: true,
         speed: 2000,
+        resizeObserver: true,
       });
     }
   }, [data]);
@@ -27,7 +27,7 @@ const Parameter = ({ data }: { data?: Content }) => {
             {data.images.map((i, index) => (
               <div
                 key={index}
-                className={`swiper-slide xl:h-[800px] relative bg-gray-600`}
+                className={`swiper-slide relative bg-gray-600`}
               >
                 {/* Next.js 图标会自动懒加载，放到轮播图时Next懒加载会导致图片未加载，即使已经能看到图片元素 */}
                 <img

@@ -6,6 +6,7 @@ export type AppStoreType = {
   windowWidth: number;
   screens: "sm" | "md" | "lg" | "xl" | "xxl";
   lang: Langs;
+  nid?: number;
 };
 
 const appSlice = createSlice({
@@ -16,6 +17,8 @@ const appSlice = createSlice({
     windowWidth: 0,
     screens: "xxl",
     lang: "cn",
+    // 路由id
+    nid: undefined,
   } as AppStoreType,
   // 指定state的各种操作，直接在对象中添加方法
   reducers: {
@@ -32,10 +35,14 @@ const appSlice = createSlice({
     setLang(state, action) {
       state.lang = action.payload;
     },
+    setNid(state, action) {
+      state.nid = action.payload;
+      console.log(" state.nid", state.nid);
+    },
   },
 });
 
-export const { handleChangeScrollY, handleChangeWindowWidth, setLang } =
+export const { handleChangeScrollY, handleChangeWindowWidth, setLang, setNid } =
   appSlice.actions; // 暴露操作方法
 
 export const { reducer: appReducer } = appSlice;

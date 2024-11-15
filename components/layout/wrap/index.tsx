@@ -9,6 +9,10 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../../theme";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import localFont from "next/font/local";
+import Head from "next/head";
+import { getIndexSeo } from "@/apis";
+import { StoreStateType } from "@/store";
+import { useSelector } from "react-redux";
 
 const aliPuHuiTiBold = localFont({
   src: "../../../public/fonts/Alibaba-PuHuiTi-Bold.ttf",
@@ -26,6 +30,8 @@ const Warp = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  const { lang } = useSelector((state: StoreStateType) => state.app);
+  const { data } = getIndexSeo();
   const dispatch = useDispatch(); // 定义派发器
   const handleScroll = () => {
     dispatch(handleChangeScrollY(window.scrollY));
@@ -63,9 +69,41 @@ const Warp = ({
     };
   }, []); // 空依赖数组表示这个effect只在组件挂载和卸载时运行
   return (
-    <div className={`${aliPuHuiTiBold.variable} ${aliPuHuiTiRegular.variable}`}>
-      {children}
-    </div>
+    <>
+      <Head>
+        {/* 360浏览器限制极速模式 */}
+        <meta name="renderer" content="webkit" />
+        <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1" />
+        <meta name="force-rendering" content="webkit" />
+        {/* 网页作者 */}
+        <meta name="author" content="毕方网络开发" />
+        {/* 网页地址 */}
+        <meta name="website" content="http://bfidc.bifnet.com/" />
+        {/* 网页版权信息 */}
+        {/* <meta name="copyright" content="2020-2021 demo.com" /> */}
+        {/* 搜索引擎索引方式，一般为all，不用深究 */}
+        <meta name="robots" content="all" />
+        {/* 移动端常用视口设置 */}
+        <meta
+          name="viewport"
+          content="width=device-width,initial-scale=1.0,maximum-scale=1.0, user-scalable=no"
+        />
+        {/* 网页关键字, 用于SEO */}
+        <meta name="keywords" content={data?.data.seo[0].key_word[lang]} />
+        {/* 网页描述 */}
+        <meta name="description" content={data?.data.seo[0].key_content[lang]} />
+        <title>{data?.data.seo[0].key_title[lang] || "恩格源"}</title>
+        {/* 
+          直接设置会出现警告，还得在 `_document` 组件设置
+          <html lang="zh" /> 
+        */}
+      </Head>
+      <div
+        className={`${aliPuHuiTiBold.variable} ${aliPuHuiTiRegular.variable}`}
+      >
+        {children}
+      </div>
+    </>
   );
 };
 

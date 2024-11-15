@@ -1,4 +1,3 @@
-import { getContent } from "@/apis/content";
 import t from "@/i18n";
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -16,9 +15,12 @@ const Scenario = ({ data }: { data?: Content }) => {
         loop: true,
         autoplay: {
           delay: 5000,
+          disableOnInteraction: false,
         },
+        resizeObserver: true,
         pagination: {
           el: ".swiper-pagination",
+          clickable: true,
         },
       });
     }
@@ -75,7 +77,7 @@ const Scenario = ({ data }: { data?: Content }) => {
           </div>
         )}
         {/* info */}
-        <div className="flex-1 mt-5 lg:mt-0">
+        <div className="flex-1 mt-5 lg:mt-0 font-pht">
           {data && <LangText name={data?.content[type + 1]}></LangText>}
         </div>
       </div>

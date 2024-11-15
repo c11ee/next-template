@@ -13,7 +13,7 @@ const Innovative = ({ data }: { data?: Content }) => {
         <h1>{data && <LangText name={data.name[0]}></LangText>}</h1>
       </div>
       {data?.images && (
-        <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 justify-center">
+        <ul className="grid grid-cols-2 lg:grid-cols-4 gap-5 justify-center">
           {data.images.map((i, index) => (
             <li key={index} className="flex items-center">
               <Card className="h-full">

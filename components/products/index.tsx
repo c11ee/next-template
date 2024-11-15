@@ -55,13 +55,7 @@ const Products = ({
           }}
           onClick={() => handleChangeTab(0)}
         >
-          <LangText
-            name={{
-              cn: "全部",
-              en: "All",
-              ja: "全て",
-            }}
-          ></LangText>
+          {t("allT")}
         </Button>
         {cats.map((i) => (
           <li key={i.id}>
@@ -80,7 +74,7 @@ const Products = ({
         ))}
       </ul>
 
-      {id && (
+      {id ? (
         <ul className="flex mb-5">
           {types.map((i) => (
             <li key={i}>
@@ -98,17 +92,19 @@ const Products = ({
             </li>
           ))}
         </ul>
+      ) : (
+        ""
       )}
 
       <ul
-        className="grid sm:grid-cols-2 gap-x-3 gap-y-5
+        className="grid grid-cols-2 gap-x-3 gap-y-5
       md:grid-cols-4 md:gap-x-5 md:gap-y-5"
       >
         {products.map((i) => (
           <li key={i.id}>
-            <Card variant="outlined">
+            <Card variant="outlined" className="h-full">
               <CardMedia
-                className="h-[250px] bg-gray-100"
+                className="h-[150px] sm:h-[360px] bg-gray-100"
                 image={
                   i.images ? process.env.NEXT_PUBLIC_HOST + i.images[0].src : ""
                 }
@@ -117,9 +113,12 @@ const Products = ({
                   backgroundSize: "100%",
                 }}
               />
-              <CardContent
-                dangerouslySetInnerHTML={{ __html: i.abstract["cn"] }}
-              ></CardContent>
+              <CardContent className="!p-2 sm:!p-4">
+                <LangText
+                  className="text-sm md:text-base line-clamp-2"
+                  name={i.abstract}
+                ></LangText>
+              </CardContent>
             </Card>
           </li>
         ))}

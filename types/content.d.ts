@@ -66,3 +66,14 @@ interface Name {
   cn: string;
   en: string;
 }
+
+interface Partner {
+  id: number;
+  name: Name;
+  logo: string;
+  sort: number;
+  status: number;
+  create_time: string;
+  delete_time: null;
+  language: Language;
+}

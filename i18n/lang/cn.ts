@@ -10,5 +10,6 @@ export default {
   hot: "热门",
   new: "最新",
   scenario: "应用场景",
-  link:"友情链接"
+  link: "友情链接",
+  allT: "全部",
 };

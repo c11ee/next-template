@@ -17,9 +17,9 @@ const SolutionPage = () => {
 
   useEffect(() => {
     if (data) {
-      let s0 = data.data.content.find((i) => i.sort == 0);
-      let s1 = data.data.content.find((i) => i.sort == 1);
-      let s2 = data.data.content.find((i) => i.sort == 2);
+      let s0 = data.data.content[0];
+      let s1 = data.data.content[1];
+      let s2 = data.data.content[2];
 
       setSolution(s0);
       setFeatures(s1);
@@ -28,7 +28,7 @@ const SolutionPage = () => {
   }, [data]);
   return (
     <>
-      <Banner sort={2}></Banner>
+      <Banner></Banner>
 
       <Solution propData={solution} hideTitle></Solution>
 

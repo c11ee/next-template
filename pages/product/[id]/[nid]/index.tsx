@@ -17,8 +17,8 @@ const Product = () => {
 
   useEffect(() => {
     if (data) {
-      const s0 = data.data.content.find((i) => i.sort == 0);
-      const s1 = data.data.content.find((i) => i.sort == 1);
+      const s0 = data.data.content[0];
+      const s1 = data.data.content[1]
 
       setProduct(s0);
       setScenario(s1);
@@ -26,7 +26,7 @@ const Product = () => {
   }, [data]);
   return (
     <>
-      <Banner sort={1}></Banner>
+      <Banner></Banner>
 
       <Products
         contentData={product}

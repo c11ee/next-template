@@ -3,6 +3,8 @@ import Image from "@/components/image/";
 import { useEffect, useState } from "react";
 import LangText from "../langText";
 import { Button } from "@mui/material";
+import { useSelector } from "react-redux";
+import { StoreStateType } from "@/store";
 
 /** 产品解决方案 */
 const Solution = ({
@@ -14,10 +16,11 @@ const Solution = ({
 }) => {
   const { data } = getContent({ type: "solute" });
   const [content, setContent] = useState<Content>();
+  const { nid } = useSelector((state: StoreStateType) => state.app);
 
   useEffect(() => {
     if (data) {
-      setContent(data.data.content.find((i) => i.nid == 1)!);
+      setContent(data.data.content.find((i) => i.nid == nid)!);
     }
   }, [data]);
   useEffect(() => {
@@ -34,16 +37,16 @@ const Solution = ({
         </div>
       )}
 
-      <ul className="w-full grid gap-y-10">
+      <ul className="w-full grid gap-y-5 sm:gap-y-10">
         {content &&
           content.images?.map((i, index) => (
             <li
               className={`sm:flex ${
-                (index) % 2 == 0 ? "sm:flex-row-reverse" : ""
+                index % 2 == 0 ? "sm:flex-row-reverse" : ""
               }`}
               key={index}
             >
-              <div className="relative sm:w-1/2 h-[200px] sm:h-[300px] lg:h-[500px]">
+              <div className="relative sm:w-1/2 h-[150px] sm:h-[300px] lg:h-[500px]">
                 <Image
                   src={process.env.NEXT_PUBLIC_HOST + i.src}
                   alt={i.title || "Solution"}
@@ -51,11 +54,11 @@ const Solution = ({
                   objectFit="cover"
                 />
               </div>
-              <div className="sm:mt-0 mt-5 sm:w-1/2 box-border px-10 flex flex-col items-center justify-center">
-                <h1 className="text-2xl font-bold font-pht-b text-gray-900 ">
+              <div className="sm:mt-0 mt-2 sm:w-1/2 box-border px-0 sm:px-10 flex flex-col items-center justify-center">
+                <h1 className="text-lg sm:text-2xl font-bold font-pht-b text-gray-900 ">
                   <LangText name={content.name[index + 1]}></LangText>
                 </h1>
-                <p className="text-xl my-5 text-gray-400">
+                <p className="text-sm sm:text-xl my-2 sm:my-5 text-gray-400">
                   <LangText name={content.content[index + 1]}></LangText>
                 </p>
                 {content.button[index + 1].cn && (

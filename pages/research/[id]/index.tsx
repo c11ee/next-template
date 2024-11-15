@@ -22,10 +22,10 @@ const Research = () => {
 
   useEffect(() => {
     if (data) {
-      const s0 = data.data.content.find((i) => i.sort == 0);
-      const s1 = data.data.content.find((i) => i.sort == 1);
-      const s2 = data.data.content.find((i) => i.sort == 2);
-      const s3 = data.data.content.find((i) => i.sort == 3);
+      const s0 = data.data.content[0];
+      const s1 = data.data.content[1];
+      const s2 = data.data.content[2];
+      const s3 = data.data.content[3];
 
       setSortData1(s0);
       setSortData2(s1);
@@ -35,7 +35,7 @@ const Research = () => {
   }, [data]);
   return (
     <>
-      <Banner sort={3}></Banner>
+      <Banner></Banner>
 
       <Innovative data={sortData1}></Innovative>
 
@@ -85,6 +85,9 @@ const Research = () => {
             <h1>
               <LangText name={sortData3.name[0]}></LangText>
             </h1>
+            <p>
+              <LangText name={sortData3.abstract[0]}></LangText>
+            </p>
           </div>
           <Card className="sm:grid sm:grid-cols-2 flex flex-col-reverse">
             <CardContent className="flex items-center justify-center flex-col md:!px-10">
