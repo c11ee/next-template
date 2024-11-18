@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import LangText from "../langText";
 import Empty from "../empty";
 import t from "@/i18n";
+import Anime from "../anime";
 
 const Products = ({
   id,
@@ -16,7 +17,11 @@ const Products = ({
   const types = ["hot", "new"];
   const [type, setType] = useState<Type>("hot");
   const { data: catsData } = getProductCate();
-  const { data: productsData } = getProduct({ cid: currentCats, type });
+  const { data: productsData } = getProduct({
+    cid: currentCats,
+    type,
+    limit: 8,
+  });
 
   const [cats, setCats] = useState<ProductCate[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
@@ -102,24 +107,34 @@ const Products = ({
       >
         {products.map((i) => (
           <li key={i.id}>
-            <Card variant="outlined" className="h-full">
-              <CardMedia
-                className="h-[150px] sm:h-[360px] bg-gray-100"
-                image={
-                  i.images ? process.env.NEXT_PUBLIC_HOST + i.images[0].src : ""
-                }
-                title="Product image"
-                sx={{
-                  backgroundSize: "100%",
-                }}
-              />
-              <CardContent className="!p-2 sm:!p-4">
-                <LangText
-                  className="text-sm md:text-base line-clamp-2"
-                  name={i.abstract}
-                ></LangText>
-              </CardContent>
-            </Card>
+            <Anime
+              options={{ scale: [0.3, 1], opacity: 1 }}
+              once
+              style={{
+                transform: "scale(0.3)",
+              }}
+            >
+              <Card variant="outlined" className="h-full">
+                <CardMedia
+                  className="h-[150px] sm:h-[360px] bg-gray-100"
+                  image={
+                    i.images
+                      ? process.env.NEXT_PUBLIC_HOST + i.images[0].src
+                      : ""
+                  }
+                  title="Product image"
+                  sx={{
+                    backgroundSize: "100%",
+                  }}
+                />
+                <CardContent className="!p-2 sm:!p-4">
+                  <LangText
+                    className="text-sm md:text-base line-clamp-2"
+                    name={i.abstract}
+                  ></LangText>
+                </CardContent>
+              </Card>
+            </Anime>
           </li>
         ))}
       </ul>

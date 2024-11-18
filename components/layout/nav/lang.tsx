@@ -11,7 +11,7 @@ const NavLang = () => {
   const langs = {
     cn: "中文",
     en: "English",
-    ja: "日本語",
+    // ja: "日本語",
   };
   const dispatch = useDispatch(); // 定义派发器
   const { lang } = useSelector((state: StoreStateType) => state.app);

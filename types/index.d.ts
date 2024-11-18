@@ -1,12 +1,13 @@
 declare module "lodash";
 declare module 'swiper';
 
-type Langs = "cn" | "en" | "ja";
+type Langs = "cn" | "en" 
+// | "ja";
 
 interface Language {
   cn: Cn;
   en: Cn;
-  ja: Cn;
+  ja?: Cn;
 }
 
 interface Cn {
@@ -16,7 +17,7 @@ interface Cn {
 interface Name {
   cn: string;
   en: string;
-  ja: string;
+  ja?: string;
 }
 
 type Type = "hot" | "new";

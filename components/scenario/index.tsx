@@ -27,9 +27,16 @@ const Scenario = ({ data }: { data?: Content }) => {
   }, [data]);
   return (
     <section className="section px-global">
-      <div className="title">
-        <h1>{t("scenario")}</h1>
-      </div>
+      {data && (
+        <div className="title">
+          <h1>
+            <LangText name={data.name[0]}></LangText>
+          </h1>
+          <p>
+            <LangText name={data.abstract[0]}></LangText>
+          </p>
+        </div>
+      )}
 
       <ul className="flex flex-wrap justify-center gap-x-5 border-b border-solid border-gray-100 pb-5 mb-8">
         {data &&

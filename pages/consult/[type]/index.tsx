@@ -35,6 +35,11 @@ const Consult = () => {
     limit: pagetion.limit,
   });
 
+  function handleSetCurrentCats(type: string) {
+    setPagetion({ page: 1, limit: 9, total: 0 });
+    setCurrentCats(type);
+  }
+
   useEffect(() => {
     if (navData) {
       setConsultTabs(
@@ -49,10 +54,13 @@ const Consult = () => {
 
   useEffect(() => {
     if (data) {
-      setNews(data.data.con);
-      setPagetion({ ...pagetion, total: data.data.count });
+      setTimeout(() => {
+        setNews(data.data.con);
+        setPagetion({ ...pagetion, total: data.data.count });
+      }, 1);
     }
   }, [data]);
+
   return (
     <>
       <Banner></Banner>
@@ -66,7 +74,7 @@ const Consult = () => {
               fontSize: 16,
               color: currentType == "" ? "" : "#5c5c5c",
             }}
-            onClick={() => setCurrentCats("")}
+            onClick={() => handleSetCurrentCats("")}
           >
             {t("allT")}
           </Button>
@@ -74,7 +82,13 @@ const Consult = () => {
             .filter((i) => i.status == 1)
             .map((i) => (
               <li key={i.id}>
-                <Link href={i.url}>
+                <Link
+                  href={i.url}
+                  onClick={() => {
+                    let type = i.url.replace("/consult/", "");
+                    handleSetCurrentCats(type);
+                  }}
+                >
                   <Button
                     variant="text"
                     size="large"

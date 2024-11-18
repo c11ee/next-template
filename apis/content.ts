@@ -46,3 +46,24 @@ export const getPartner = () => {
     { revalidateOnFocus: false }
   );
 };
+
+/** 联系我们  */
+export const getContact = () => {
+  return useSWR(
+    `/index/contact`,
+    (url) => http.request<ResultType<{ contact: Contact }>>("get", url),
+    { revalidateOnFocus: false }
+  );
+};
+
+/** 监控用户访问时长API  */
+export const postVisit = (form: {
+  router: string;
+  name: string;
+  begin_time: string;
+  leave_time: string;
+}) => {
+  return http.request("post", `/index/visit`, {
+    data: form,
+  });
+};

@@ -5,12 +5,24 @@ import t from "@/i18n";
 import { getConsult } from "@/apis/content";
 import { Card, CardContent, CardMedia } from "@mui/material";
 import Link from "next/link";
+import { setNid } from "@/store/app";
+import { useDispatch } from "react-redux";
+import useNav from "@/hooks/useNav";
 
 /** 咨询中心 */
 const Counseling = () => {
-  const { data } = getConsult();
+  const dispatch = useDispatch(); // 定义派发器
+  const { data: navData, getNidByPath } = useNav(0);
+  const { data } = getConsult({ limit: 9 });
   const [news, setNews] = useState<Con[]>([]);
+  const [info, setInfo] = useState<Nav>();
 
+  useEffect(() => {
+    if (navData) {
+      const item = navData.data.navs.find((i) => i.url == "/consult");
+      setInfo(item);
+    }
+  }, [navData]);
   useEffect(() => {
     if (data) {
       setNews(data?.data.con);
@@ -19,9 +31,13 @@ const Counseling = () => {
 
   return (
     <section className={`section px-global`}>
-      <div className="title">
-        <h1>{t("zxzx")}</h1>
-      </div>
+      {info && (
+        <div className="title">
+          <h1>
+            <LangText name={info.name}></LangText>
+          </h1>
+        </div>
+      )}
 
       <div className="flex justify-end text-gray-900 text-sm sm:text-base">
         <Link href="/consult/0">
@@ -31,7 +47,12 @@ const Counseling = () => {
       </div>
       {news.length ? (
         <div className="md:flex gap-x-[40px]">
-          <Link href={`/consult/2/${news[0].id}`}>
+          <Link
+            href={`/consult/2/${news[0].id}`}
+            onClick={() => {
+              dispatch(setNid(getNidByPath("/consult/[type]/[id]")));
+            }}
+          >
             <Card
               variant="outlined"
               className="w-full md:w-[300px] lg:w-[500px] xl:w-[700px]"
@@ -55,7 +76,7 @@ const Counseling = () => {
                 ></LangText>
                 <LangText
                   name={news[0].content}
-                  className="line-clamp-3 text-sm sm:text-base text-gray-400 my-1 sm:my-5"
+                  className="line-clamp-3 text-sm sm:text-base text-gray-400 my-1 sm:my-[23px]"
                 ></LangText>
                 <span className="text-sm sm:text-base text-gray-200">
                   {news[0].create_time.split(" ")[0].replaceAll("-", "/")}
@@ -66,7 +87,13 @@ const Counseling = () => {
           <ul className="flex-1">
             {news.slice(1).length ? (
               news.slice(1).map((i) => (
-                <Link key={i.id} href={`/consult/2/${i.id}`}>
+                <Link
+                  key={i.id}
+                  href={`/consult/2/${i.id}`}
+                  onClick={() => {
+                    dispatch(setNid(getNidByPath("/consult/[type]/[id]")));
+                  }}
+                >
                   <li className="flex justify-between py-[10px] sm:py-[19px] border-b border-solid border-gray-200 text-sm sm:text-base">
                     <p className="text-gray-900">
                       <LangText

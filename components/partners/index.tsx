@@ -1,7 +1,6 @@
 import { getPartner } from "@/apis/content";
 import { useEffect, useState } from "react";
 import LangText from "../langText";
-import Image from "@/components/image/";
 import useNav from "@/hooks/useNav";
 
 /** 合作伙伴 */
@@ -29,7 +28,7 @@ const Partners = () => {
           </h1>
         </div>
       )}
-      <ul className="grid grid-cols-2 md:flex flex-wrap justify-center">
+      <ul className="grid grid-cols-2 md:flex flex-wrap justify-center gap-5">
         {partners.map((i) => (
           <li
             key={i.id}

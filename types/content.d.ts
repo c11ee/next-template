@@ -77,3 +77,32 @@ interface Partner {
   delete_time: null;
   language: Language;
 }
+
+interface Contact {
+  '0': _0;
+  config: Config[];
+}
+
+interface Config {
+  id: number;
+  name: string;
+  system: number;
+  group: string;
+  type: string;
+  value: string;
+  tips: string;
+}
+
+interface _0 {
+  id: number;
+  name: Name;
+  address: Name;
+  version: string;
+  customer: string;
+  record: string;
+  official: string;
+  wecom: string;
+  create_time: string;
+  delete_time: null;
+  language: Language;
+}

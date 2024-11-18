@@ -3,12 +3,13 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getIndexLink, getIndexNav } from "@/apis/nav";
 import LangText from "@/components/langText";
-import Qrcode from "../../../public/image/qrcode.png";
 import t from "@/i18n";
+import useContact from "@/hooks/useContact";
 
 const Footer = () => {
   const [footList, setFootList] = useState<Nav[]>([]);
   const { data } = getIndexNav(1);
+  const { data: contentData } = useContact();
   const { data: dataLink } = getIndexLink();
 
   useEffect(() => {
@@ -63,34 +64,50 @@ const Footer = () => {
         md:pl-[30px] lg:pl-[60px] xl:pl-[80px]"
         >
           <div className="size-[100px] md:size-[150px] relative">
-            <Image src={Qrcode} alt="bottom-logo" layout="fill"></Image>
+            {contentData && (
+              <Image
+                src={process.env.NEXT_PUBLIC_HOST + contentData[0].wecom}
+                alt="bottom-logo"
+                layout="fill"
+              ></Image>
+            )}
           </div>
           <address className="text-white text-sm flex flex-col gap-y-5 not-italic md:mt-[40px] w-[211px]">
-            <p>
-              <i className="iconfont icon-daohangdizhi mr-2"></i>
-              <span>广东省深圳市沙河西路科技园7栋22楼</span>
-            </p>
-            <p>
-              <i className="iconfont icon-24gf-telephone mr-2"></i>
-              <span>400-8888-9999</span>
-            </p>
-            <p>
-              <i className="iconfont icon-email-fill mr-2"></i>
-              <span>onli@outlook.com</span>
-            </p>
+            {contentData && (
+              <p>
+                <i className="iconfont icon-daohangdizhi mr-2"></i>
+                <LangText name={contentData[0].address}></LangText>
+              </p>
+            )}
+            {contentData && (
+              <p>
+                <i className="iconfont icon-24gf-telephone mr-2"></i>
+                <span>{contentData[0].customer}</span>
+              </p>
+            )}
+            {contentData && (
+              <p>
+                <i className="iconfont icon-email-fill mr-2"></i>
+                <span>
+                  {
+                    contentData.config.find((i) => i.name == "site_email")
+                      ?.value
+                  }
+                </span>
+              </p>
+            )}
           </address>
         </div>
       </div>
-      <div className="text-xs text-white py-5 px-2 bg-gray-900 text-center border border-solid border-white border-opacity-60">
-        Copyright© emallevepower.com 2012 - 2022 格恩源 All Rights Reserved |
-        网站备案号:
-        <Link href={"https://beian.miit.gov.cn"} target="_block">
-          粤ICP备07510784号-5
-        </Link>
-        <Link href={"https://beian.miit.gov.cn"} target="_block">
-          粤公网安备4413307878100225号
-        </Link>
-      </div>
+      {contentData && (
+        <div className="text-xs text-white py-5 px-2 bg-gray-900 text-center border border-solid border-white border-opacity-60">
+          {contentData[0].version}
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <Link href={"https://beian.miit.gov.cn"} target="_block">
+            {contentData[0].record}
+          </Link>
+        </div>
+      )}
     </footer>
   );
 };

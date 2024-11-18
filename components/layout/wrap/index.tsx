@@ -13,6 +13,7 @@ import Head from "next/head";
 import { getIndexSeo } from "@/apis";
 import { StoreStateType } from "@/store";
 import { useSelector } from "react-redux";
+import useMonitorUserAccessTime from "@/hooks/useMonitorUserAccessTime";
 
 const aliPuHuiTiBold = localFont({
   src: "../../../public/fonts/Alibaba-PuHuiTi-Bold.ttf",
@@ -30,6 +31,7 @@ const Warp = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  useMonitorUserAccessTime();
   const { lang } = useSelector((state: StoreStateType) => state.app);
   const { data } = getIndexSeo();
   const dispatch = useDispatch(); // 定义派发器
@@ -91,7 +93,10 @@ const Warp = ({
         {/* 网页关键字, 用于SEO */}
         <meta name="keywords" content={data?.data.seo[0].key_word[lang]} />
         {/* 网页描述 */}
-        <meta name="description" content={data?.data.seo[0].key_content[lang]} />
+        <meta
+          name="description"
+          content={data?.data.seo[0].key_content[lang]}
+        />
         <title>{data?.data.seo[0].key_title[lang] || "恩格源"}</title>
         {/* 
           直接设置会出现警告，还得在 `_document` 组件设置

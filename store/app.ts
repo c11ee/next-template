@@ -7,6 +7,7 @@ export type AppStoreType = {
   screens: "sm" | "md" | "lg" | "xl" | "xxl";
   lang: Langs;
   nid?: number;
+  model: "pc" | "h5";
 };
 
 const appSlice = createSlice({
@@ -19,6 +20,7 @@ const appSlice = createSlice({
     lang: "cn",
     // 路由id
     nid: undefined,
+    model: "pc",
   } as AppStoreType,
   // 指定state的各种操作，直接在对象中添加方法
   reducers: {
@@ -30,7 +32,7 @@ const appSlice = createSlice({
       state.windowWidth = action.payload as number;
 
       state.screens = handleComScreens(state.windowWidth);
-      // console.log('修改',state.screens);
+      state.model = ["sm", "md"].includes(state.screens) ? "h5" : "pc";
     },
     setLang(state, action) {
       state.lang = action.payload;

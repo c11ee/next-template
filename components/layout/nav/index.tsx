@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { StoreStateType } from "@/store";
-import Logo from "@/public/logo.png";
 import _ from "lodash";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -13,8 +12,9 @@ import NavLang from "./lang";
 import { useDispatch } from "react-redux";
 import { setNid } from "@/store/app";
 import useNav from "@/hooks/useNav";
+import useContact from "@/hooks/useContact";
 
-function handleActive(key: string, activeKey: string): boolean {
+function handleActive(key: string | string[], activeKey: string): boolean {
   if (_.isArray(key)) {
     return key.includes(activeKey);
   } else {
@@ -80,7 +80,11 @@ const DropDown = ({ item, activeUrl }: { item: Nav; activeUrl: string }) => {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
-        className="cursor-pointer hover:text-primary"
+        className={`cursor-pointer hover:text-primary ${
+          handleActive(item.children?.map((i) => i.url) || [], activeUrl)
+            ? "text-primary"
+            : ""
+        } `}
       >
         <LangText name={item.name}></LangText>
         <i
@@ -130,6 +134,7 @@ const DropDown = ({ item, activeUrl }: { item: Nav; activeUrl: string }) => {
           <MenuItem
             key={link.id}
             className={`${link.status == 0 ? "!hidden" : ""}`}
+            onClick={handleClose}
           >
             <Link
               className={`${
@@ -155,6 +160,7 @@ const NavBar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { data, getNidByPath } = useNav(0);
+  const { data: contentData } = useContact();
 
   const { scrollY, windowWidth } = useSelector(
     (state: StoreStateType) => state.app
@@ -164,10 +170,20 @@ const NavBar = () => {
   const [open, setOpen] = useState(false);
   const [links, setLinks] = useState<Nav[]>([]);
 
+  function initNid() {
+    let p = pathname;
+    // 匹配咨询详情动态路由
+    const regex = /^\/consult\/(?:\d+|\w+)\/(?:\d+|\w+)$/;
+    if (regex.test(p)) {
+      p = "/consult/[type]/[id]";
+    }
+    dispatch(setNid(getNidByPath(p)));
+  }
+
   useEffect(() => {
     setNavBg(
       scrollY >= 100
-        ? "md:bg-primary md:bg-opacity-60 md:text-white bg-white text-gray-900"
+        ? "md:bg-primary md:bg-opacity-30 md:text-white bg-white text-gray-900"
         : "bg-white text-gray-900"
     );
   }, [scrollY]);
@@ -180,6 +196,7 @@ const NavBar = () => {
   }, [windowWidth]);
 
   useEffect(() => {
+    initNid();
     setOpen(false);
     setActiveUrl(pathname as string);
   }, [pathname]);
@@ -193,14 +210,7 @@ const NavBar = () => {
   }, [open]);
 
   useEffect(() => {
-    let p = pathname;
-    // 匹配咨询详情动态路由
-    const regex = /^\/consult\/(?:\d+|\w+)\/(?:\d+|\w+)$/;
-    if (regex.test(p)) {
-      p = "/consult/[type]/[id]";
-    }
-    dispatch(setNid(getNidByPath(p)));
-
+    initNid();
     setLinks(data?.data.navs || []);
   }, [data]);
 
@@ -214,7 +224,18 @@ const NavBar = () => {
         {/* logo */}
         <Link href="/">
           <div className="relative w-[60px] h-[60px]">
-            <Image src={Logo} layout="fill" alt="logo" priority />
+            {contentData && (
+              <Image
+                src={
+                  process.env.NEXT_PUBLIC_HOST +
+                  (contentData.config.find((i) => i.name == "site_logo")
+                    ?.value || "")
+                }
+                layout="fill"
+                alt="logo"
+                priority
+              />
+            )}
           </div>
         </Link>
 
